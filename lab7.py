@@ -44,7 +44,7 @@ def clear_dict():
 #  сортировка словаря
 def sort_dict():
     sorted_dict = sorted(dictionary.items())
-    return dict(sorted_dict)
+    return sorted_dict
 
 
 #  вывод всего словаря
