@@ -1,34 +1,40 @@
-with open('file.txt', 'r') as f:
+with open('file.txt', 'r', encoding='utf-8') as f:
     text = f.read().lower().rstrip()
+    text = text.replace('\n', '') and text.replace(' ', '')
+output = open('output.txt', 'w', encoding='utf-8')
 
 #длина файла (кол-во символов)
 file_length = 0
 for a in text:
     file_length += 1
-print('Длина файла: ', file_length)
+file_length = 'Длина файла: ' + str(file_length) + '\n'
+output.write(file_length)
 
-#количество гласных
-vowels_count = 0
-vowels = ['а', 'е', 'ё', 'и', 'о', 'у', 'ы', 'э', 'ю', 'я', 'b']
+#  количество гласных
+count = 1
+vowels = ['a', 'е', 'ё', 'и', 'о', 'у', 'ы', 'э', 'ю', 'я']
 for b in text:
     if b in vowels:
-        vowels_count += 1
-print('Количество гласных: ', vowels_count)
+        count += 1
+vowels_count = 'Количество гласных: ' + str(count) + '\n'
+output.write(vowels_count)
 
-#самая частая буква
-letters = {}
-for letter in text:
-    try:
-        letters[letter] += 1
-    except KeyError:
-        letters[letter] = 1
-most_commons = sorted(letters.items(), key=lambda kv: kv[1], reverse=True)
-most_freq = most_commons[0]
-print('Самая часто употребляемая буква: ', most_freq[0])
+#  самая частая буква
+i = max = maxw = 0
+c = ''
+for i in range(len(text)):
+    if text.count(text[i]) > max and text[i] not in c:
+        max = text.count(text[i])
+        maxw = text[i]
+        c += text[i]
+max_vowel = 'Самая часто употребляемая буква (' + str(maxw) + '): ' + str(max) + '\n'
+output.write(max_vowel)
 
-#количество строк
+
+#  количество строк
 l = 0
 for line in open('file.txt', 'r'):
     l += 1
-print('Количество строк: ', l)
-f.close()
+string_count = 'Количество строк: ' + str(l)
+output.write(string_count)
+output.close()
