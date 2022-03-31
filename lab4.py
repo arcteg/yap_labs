@@ -24,11 +24,11 @@ output.write(vowels_count)
 #  самая частая буква
 i = max = maxl = 0
 c = ''
-for i in range(len(text)):
-    if text.count(text[i]) > max and text[i] not in c:
-        max = text.count(text[i])
-        maxl = text[i]
-        c += text[i]
+for i in text:
+    if text.count(i) > max and i not in c:
+        max = text.count(i)
+        maxl = i
+        c += i
 max_vowel = 'Самая часто употребляемая буква (' + str(maxl) + '): ' + str(max) + '\n'
 output.write(max_vowel)
 
