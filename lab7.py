@@ -68,18 +68,29 @@ def chng_pair(old_key):
 
 # смена ключа и значения местами
 def reverse(rkey):
+    result = {}
     if rkey == 'all':
-        result = {}
         for key, value in dictionary.items():
-            if isinstance(value, list):
-                for item in value:
-                    result[item] = key
-            else:
-                result[value] = key
+            if not isinstance(value, list):
+                value = [value]
+            for v in value:
+                if v in result:
+                    if type(result[v]) is list:
+                        result[v].append(key)
+                    else:
+                        result[v] = [result[v], key]
+                else:
+                    result[v] = key
         return result
     else:
-        dictionary[dictionary.pop(rkey)] = rkey
-    print(dictionary)
+        if isinstance(dictionary[rkey], list):
+            for value in dictionary[rkey]:
+                dictionary[value] = rkey
+            dictionary.pop(rkey)
+            result = dictionary
+        else:
+            dictionary[dictionary.pop(rkey)] = rkey
+        return result
 
 ####################################################
 ####################ТЕСТИРОВАНИЕ####################
@@ -127,7 +138,8 @@ while num:
         print(dictionary)
     elif num == '9':
         rkey = input('Введите ключ или all: ')
-        print(reverse(rkey))
+        dictionary = reverse(rkey)
+        print(dictionary)
     elif num == '0':
         print('Програма завершена!')
         break
