@@ -128,54 +128,42 @@ while not gabela:
         # print('Точка лежит снаружи круга.')
         pass
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            gabela = True
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_a:
-                cir[0] -= 1
+        j = event.type
+        match j:
+            case pygame.QUIT:
+                gabela = True
+        q = event.type
+        match q:
+            case pygame.KEYDOWN:
+                match event.key:
+                    case pygame.K_a:
+                        cir[0] -= 1
+                    case pygame.K_d:
+                        cir[0] += 1
+                    case pygame.K_w:
+                        cir[1] += 1
+                    case pygame.K_s:
+                        cir[1] -= 1
 
-            elif event.key == pygame.K_d:
-                cir[0] += 1
-
-            elif event.key == pygame.K_w:
-                cir[1] += 1
-
-            elif event.key == pygame.K_s:
-                cir[1] -= 1
-
-            ax.clear()
-            ax = graph()
-            circle2 = plt.Circle(
-                (cir[0], cir[1]), cir[2],
-                color="Black",
-                fill=False
-            )
-            rect2 = plt.Rectangle(
-                (start_positionx, start_positiony), w, h,
-                color="Black",
-                fill=False, alpha=1
-            )
-
-            # !!!!plt.pause(0.1)
-            if r or c or l:
-                rect = plt.Rectangle(
-                    (start_positionx, start_positiony), w, h,
-                    color="Pink",
+                ax.clear()
+                ax = graph()
+                circle2 = plt.Circle(
+                    (cir[0], cir[1]), cir[2],
+                    color="Black",
                     fill=False
                 )
-                circle1 = plt.Circle(
-                    (cir[0], cir[1]), cir[2],
-                    color="Pink",
-                    fill=False, alpha=0.6
+                rect2 = plt.Rectangle(
+                    (start_positionx, start_positiony), w, h,
+                    color="Black",
+                    fill=False, alpha=1
                 )
-                ax.add_patch(circle1)
-                ax.add_patch(rect)
-            else:
-                if (x5 < point[0] < x6) and (y5 < point[1] < y6) and f < cir[2] ** 2:
+
+            # !!!!plt.pause(0.1)
+                if r or c or l:
                     rect = plt.Rectangle(
                         (start_positionx, start_positiony), w, h,
                         color="Pink",
-                        fill=True
+                        fill=False
                     )
                     circle1 = plt.Circle(
                         (cir[0], cir[1]), cir[2],
@@ -185,86 +173,68 @@ while not gabela:
                     ax.add_patch(circle1)
                     ax.add_patch(rect)
                 else:
-                    if f < cir[2] ** 2:
+                    if (x5 < point[0] < x6) and (y5 < point[1] < y6) and f < cir[2] ** 2:
                         rect = plt.Rectangle(
                             (start_positionx, start_positiony), w, h,
-                            color="White",
+                            color="Pink",
                             fill=True
                         )
                         circle1 = plt.Circle(
                             (cir[0], cir[1]), cir[2],
                             color="Pink",
-                            fill=True, alpha=0.6
+                            fill=False, alpha=0.6
                         )
                         ax.add_patch(circle1)
                         ax.add_patch(rect)
-
                     else:
-                        circle1 = plt.Circle(
-                            (cir[0], cir[1]), cir[2],
-                            color="Black",
-                            fill=False
+                        if f < cir[2] ** 2:
+                            rect = plt.Rectangle(
+                                (start_positionx, start_positiony), w, h,
+                                color="White",
+                                fill=True
+                            )
+                            circle1 = plt.Circle(
+                                (cir[0], cir[1]), cir[2],
+                                color="Pink",
+                                fill=True, alpha=0.6
+                            )
+                            ax.add_patch(circle1)
+                            ax.add_patch(rect)
 
-                        )
-            if r1:
-                rect = plt.Rectangle(
-                    (start_positionx, start_positiony), w, h,
-                    color="Pink",
-                    fill=True
-                )
-                circle1 = plt.Circle(
-                    (cir[0], cir[1]), cir[2],
-                    color="White",
-                    fill=True)
-                kf = True
-                ax.add_patch(rect)
-                ax.add_patch(circle1)
+                        else:
+                            circle1 = plt.Circle(
+                                (cir[0], cir[1]), cir[2],
+                                color="Black",
+                                fill=False
 
-            if d > 0:
-                plt.fill_between(x=[linexy[0], linexy[2]], y1=[linexy[1], linexy[3]], y2=10, color="w", alpha=1)
-            else:
-                plt.fill_between(x=[linexy[0], linexy[2]], y1=[linexy[1], linexy[3]], y2=-10, color="w", alpha=1)
+                            )
+                if r1:
+                    rect = plt.Rectangle(
+                        (start_positionx, start_positiony), w, h,
+                        color="Pink",
+                        fill=True
+                    )
+                    circle1 = plt.Circle(
+                        (cir[0], cir[1]), cir[2],
+                        color="White",
+                        fill=True)
+                    kf = True
+                    ax.add_patch(rect)
+                    ax.add_patch(circle1)
 
-            ax.plot((linexy[0], linexy[2]), (linexy[1], linexy[3]))  # Постоянно вставлять
-            ax.scatter(point[0], point[1], color="purple")
-            ax.add_patch(rect2)
-            ax.add_patch(circle2)
-            plt.pause(0.1)
+                if d > 0:
+                    plt.fill_between(x=[linexy[0], linexy[2]], y1=[linexy[1], linexy[3]], y2=10, color="w", alpha=1)
+                else:
+                    plt.fill_between(x=[linexy[0], linexy[2]], y1=[linexy[1], linexy[3]], y2=-10, color="w", alpha=1)
+
+                ax.plot((linexy[0], linexy[2]), (linexy[1], linexy[3]))  # Постоянно вставлять
+                ax.scatter(point[0], point[1], color="purple")
+                ax.add_patch(rect2)
+                ax.add_patch(circle2)
+                #plt.savefig('fig.png')
+                plt.pause(0.1)
 # plt.draw()
 plt.ioff()
 
 pygame.quit()
 quit()
-# ax.plot((linexy[0], linexy[2]), (linexy[1], linexy[3]))#Постоянно вставлять
-# ax.scatter(point[0], point[1], color="purple")
-# ax.add_patch(rect2)
-# ax.add_patch(circle2)
-
-# plt.show()
-"""
-       if i==0:
-                ax.clear()
-                ax = graph()
-                #k = plt.Circle((cir[0],cir[1]),cir[2],)
-                plt.draw()
-                ax.plot((linexy[0], linexy[2]), (linexy[1], linexy[3]))#Постоянно вставлять
-                ax.scatter(point[0], point[1], color="purple")
-                ax.add_patch(rect2)
-                ax.add_patch(circle2)
-                #ax.add_patch(k)
-                plt.pause(0.1)
-            else:
-                #k = plt.Circle((x,y),r,fill=False)
-                #plt.draw()
-                #ax.add_patch(k)
-                #plt.plot(linex,liney)
-                #plt.pause(0.1)
-                ax.plot((linexy[0], linexy[2]), (linexy[1], linexy[3]))#Постоянно вставлять
-                ax.scatter(point[0], point[1], color="purple")
-                ax.add_patch(rect2)
-                ax.add_patch(circle2)
-    i+=1        
-    dis.fill(white)
-    pygame.draw.rect(dis, black, [x1, y1, 10, 10])
-    pygame.display.update()
-"""
